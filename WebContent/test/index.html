@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AJAX practice</title>
+<script>
+	function load(){
+		location.href="/test/apple.jsp";
+	}
+	
+	//서버에 비동기방식으로 요청을 시도해보자~!
+	//현재 실행부는 할일하고 별도의 실행부가 백그라운드에서 요청 및 그 결과까지 가져와 준다.
+	//현재 페이지의 reloading이 일어나지 않음, 마치 응용프로그램처럼 보인다..
+	function getFruit(){
+		var xhttp;
+		//비동기 통신 객체 생성
+		xhttp=new XMLHttpRequest();
+		
+		//response왔는지 체크할 설정
+		xhttp.onreadystatechange =  function() {
+			if(this.readyState==4 && this.status==200){
+				document.getElementById("tet").value = this.responseText;
+			}
+		}
+		
+		
+		//request
+		xhttp.open("GET", "apple.jsp", true);
+		xhttp.send();
+		
+		
+	}
+</script>
+</head>
+
+<body>
+<input type="button" value="실행하기" onClick="load()">
+<a href="javascript:getFruit()">과일요청</a>
+<input type="text" id="tet">
+
+</body>
+</html>
