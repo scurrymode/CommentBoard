@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+var xhhtp;
+var nick, age, gender;
+function init(){
+	nick = document.getElementById("nick");
+	age = document.getElementById("age");
+	gender = document.getElementById("gender");
+	//ajax의 객체 생성
+	xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "data.jsp?phone=01024514844&addr=서울시", true);
+	//비동기 실행부의 상태에 따라 호출되는 콜백함수를 이용하여 처리할 시점을 결정
+	xhttp.onreadystatechange = function(){
+		if(xhttp.readyState==4 && xhttp.status==200){
+			//서버로부터 제대로된 응답을 받았다는 확신이 든 시점
+			var obj=JSON.parse(xhttp.responseText);
+			
+			nick.value=obj.members[1].name;
+			age.value=obj.members[1].age;
+			gender.value=obj.members[1].gender;
+		}
+	}
+}
+
+function send(){
+	xhttp.send();
+	
+}
+</script>
+</head>
+<body onLoad="init()">
+
+<pre>
+<input type="text" id="nick" placeholder="이름">
+<input type="text" id="age" placeholder="나이">
+<input type="text" id="gender" placeholder="성별">
+<input type="button" value="전송" onClick="send()">
+</pre>
+</body>
+</html>

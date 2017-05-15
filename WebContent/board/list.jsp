@@ -71,7 +71,7 @@ img{border:0px}
 		  <%  News news = list.get(curPos++);%>
 		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
 			  <td width="50"><%=num-- %></td>
-			  <td width="303"><a href="detail.jsp?news_id=<%=news.getNews_id()%>"><%=news.getTitle()%></a></td>
+			  <td width="303"><a href="detail.jsp?news_id=<%=news.getNews_id()%>"><%=news.getTitle()%>[5]</a></td>
 			  <td width="100"><%=news.getWriter()%></td>
 			  <td width="100"><%=news.getRegdate().substring(0,10)%></td>
 			  <td width="50"><%=news.getHit()%></td>

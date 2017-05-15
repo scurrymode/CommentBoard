@@ -33,17 +33,66 @@ border:#C3C3C3 1px solid
 #copyright{font-size:9pt;}
 a{text-decoration:none}
 img{border:0px}
+
+#comments_line{
+width:100%;
+background:yellow;
+}
 </style>
 <script>
+var xhttp; //ajax의 요청객체
+var comments_line;
+
+function init(){
+	xhttp= new XMLHttpRequest();
+	comments_line = document.getElementById("comments_line");
+	//stateChange 상태값에 따라 우측의 콜백 함수가 호출됨
+	//개발자는 이중 상태값이 4인것만 처리하면 됨
+	getList();
+}
+
+function getList(){
+	xhttp.onreadystatechange=function(){
+		if(xhttp.readyState==4&&xhttp.status==200){
+			var obj=JSON.parse(xhttp.responseText);
+			
+			var tag="";
+			comments_line.innerHTML=tag;
+			for(var i=0; i<obj.list.length;i++){
+				tag+="<span>"+obj.list[i].writer+" </span>";
+				tag+="<span>"+obj.list[i].msg+" </span>";
+				tag+="<span>"+obj.list[i].regdate+" </span>";
+				tag+="<br>";
+			}
+			
+			comments_line.innerHTML=tag;			
+		}
+	}
+	xhttp.open("get", "/board/comments_list.jsp?news_id="+form1.news_id.value, true);
+	xhttp.send();
+}
 
 //서버에 댓글 등록을 요청한다.
-	function reply(){
-		form1.action="/board/reply.jsp";
-		form1.submit();
+function reply(){
+	var news_id = form1.news_id.value;
+	var nickname = form1.nickname.value;
+	var msg = form1.msg.value;
+	
+	xhttp.onreadystatechange=function(){
+		if(xhttp.readyState==4&&xhttp.status==200){
+			if(xhttp.responseText!=0){
+				getList();
+			}
+		}
 	}
+	
+	xhttp.open("post", "/board/reply.jsp", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("nickname="+nickname+"&msg="+msg+"&news_id="+news_id);
+}
 </script>
 </head>
-<body>
+<body onload="init()">
 <form name="form1">
 <input type="hidden" name="news_id" value="<%=news.getNews_id() %>">
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
@@ -93,11 +142,12 @@ img{border:0px}
      </td>
   </tr>
   <tr>
-  
   	<td>
+  	<div id="comments_line">
   		<span>작성자</span>
   		<span>코멘트나올 곳...</span>
   		<span>2017-07-24 05:12</span>
+  	</div>
   	</td>
   
   </tr>

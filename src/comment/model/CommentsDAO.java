@@ -65,7 +65,6 @@ public class CommentsDAO {
 			pool.freeConnection(con, pstmt, rs);
 		}		
 		return list;
-		
 	}
 }
 

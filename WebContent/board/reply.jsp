@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="comment.model.Comments"%>
 <%@page import="comment.model.CommentsDAO"%>
 <%@include file="/inc/message.jsp" %>
@@ -16,10 +17,7 @@
 	comments.setWriter(writer);
 	
 	int result = commentsDAO.insert(comments);
-	if(result!=0){
-		out.print(showMsgURL("댓글달기성공", "/board/detail.jsp?news_id="+news_id));
-	}else{
-		out.print(showMsgBack("댓글달기실패"));
-	}
+	
+	out.print(result);
 	
 %>

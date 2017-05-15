@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+/*
+window.onload = function(){
+	alert("순수 js를 이용한 load 이벤트 체크");
+}
+*/
+
+$("document").ready(function(){
+ 	//alert("jquery를 이용한 load 이벤트 체크")
+ 	$("#bt").click(function(){
+ 		//$("#area").load("data.jsp");
+ 		$.ajax({
+ 			url:"data.jsp",
+ 			type:"GET",
+ 			data:"phone=010&addr=boston",
+ 			success:function(result){
+ 				$("#area").val(result);
+ 			}
+ 		});
+ 	});
+});
+
+</script>
+</head>
+<body>
+<input type="button" id="bt" value="전송">
+<textarea id="area" rows="25" cols="35"></textarea>
+
+</body>
+</html>
