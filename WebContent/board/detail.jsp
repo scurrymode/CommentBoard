@@ -1,7 +1,7 @@
 <%@page import="comment.model.News"%>
-<%@page import="comment.model.NewsDAO"%>
+<%@page import="comment.model.NewsDAOMybatis"%>
 <%@ page contentType="text/html;charset=utf-8"%>
-<%! NewsDAO newsDAO = new NewsDAO(); %>
+<%! NewsDAOMybatis newsDAO = new NewsDAOMybatis(); %>
 <% 
 	String news_id=request.getParameter("news_id"); 
 	News news = newsDAO.select(Integer.parseInt(news_id));
@@ -90,6 +90,21 @@ function reply(){
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("nickname="+nickname+"&msg="+msg+"&news_id="+news_id);
 }
+
+function del(){
+	if(confirm("정말 삭제하시겠습니까?")){
+		location.href="/board/delete.jsp?news_id=<%=news.getNews_id()%>";
+	}	
+}
+
+function update(){
+	if(confirm("정말 수정하시겠습니까?")){
+		form1.method="post";
+		form1.action="/board/edit.jsp";
+		form1.submit();
+	}
+}
+
 </script>
 </head>
 <body onload="init()">
@@ -131,8 +146,9 @@ function reply(){
 	</tr>
   <tr>
     <td height="30" align="right" style="padding-right:2px;">
-	<img src="/board/images/write_btin.gif" width="61" height="20">
-	<img src="/board/images/delete_btn.gif" width="61" height="20"> <a href="list.html"><img src="/board/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
+	<img src="/board/images/write_btin.gif" width="61" height="20" onClick="update()">
+	<img src="/board/images/delete_btn.gif" width="61" height="20" onClick="del()">
+	<a href="list.jsp"><img src="/board/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
   </tr>
   <tr>
      <td>

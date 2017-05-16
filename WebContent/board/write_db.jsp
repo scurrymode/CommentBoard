@@ -1,7 +1,7 @@
-<%@page import="comment.model.NewsDAO"%>
+<%@page import="comment.model.NewsDAOMybatis"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ include file="/inc/message.jsp" %>
-<%! NewsDAO newsDAO = new NewsDAO(); %>
+<%! NewsDAOMybatis newsDAO = new NewsDAOMybatis(); %>
 
 <jsp:useBean id="dto" class="comment.model.News"/> <!-- 클래스를 올리는 태그다.자바의 new와 같다.-->
 <% request.setCharacterEncoding("utf-8"); %>

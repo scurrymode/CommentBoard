@@ -9,7 +9,7 @@ import java.util.List;
 
 import pool.PoolManager;
 
-public class NewsDAO {
+public class NewsDAOJdbc {
 	PoolManager pool = PoolManager.getInstance();
 	
 	//create ==insert

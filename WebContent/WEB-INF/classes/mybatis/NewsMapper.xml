@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="News">
+	<resultMap type="News" id="joinMap">
+		<result column="news_id" property="news_id"/>
+		<result column="writer" property="writer"/>
+		<result column="title" property="title"/>
+		<result column="regdate" property="regdate"/>
+		<result column="hit" property="hit"/>
+		<collection property="list" javaType="java.util.List" ofType="Comments" select="selectComments" column="news_id">
+  			<id property="news_id" column="news_id" />
+			<result property="comments_id" column="comments_id" />
+			<result property="writer" column="writer" />
+			<result property="msg" column="msg" />
+			<result property="regdate" column="regdate" />
+		</collection>
+	</resultMap>
+	
+	<!--  Comments와 조인 -->
+	<select id="selectJoin" resultMap="joinMap">
+		select * from news order by news_id desc
+	</select>
+	<select id="selectComments" resultType="Comments">
+		select * from comments where news_id=#{news_id}
+	</select>
+
+	<select id="selectAll" resultType="News">
+		select * from news order by news_id desc
+	</select>
+	
+	<select id="select" resultType="News" parameterType="int">
+		select * from news where news_id=#{news_id}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from news where news_id=#{news_id}	
+	</delete>
+	
+	<update id="update" parameterType="News">
+		update news set writer=#{writer}, title=#{title}, content=#{content} where news_id=#{news_id}
+	</update>
+	
+	<insert id="insert" parameterType="News">
+		insert into news(news_id, writer, title, content)
+		values(seq_news.nextval, #{writer}, #{title}, #{content})
+	</insert>
+	
+</mapper>

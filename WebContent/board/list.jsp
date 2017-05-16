@@ -1,10 +1,11 @@
+<%@page import="comment.model.Comments"%>
+<%@page import="comment.model.NewsDAOMybatis"%>
 <%@page import="comment.model.News"%>
 <%@page import="java.util.List"%>
-<%@page import="comment.model.NewsDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
-<%! NewsDAO newsDAO = new NewsDAO(); %>
+<%! NewsDAOMybatis newsDAO = new NewsDAOMybatis(); %>
 <%
-	List<News> list = newsDAO.select();
+	List<News> list = newsDAO.selectJoin();
 	int currentPage=1;
 	if(request.getParameter("currentPage")!=null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -68,10 +69,11 @@ img{border:0px}
 		  <table width="100%" border="0" cellpadding="0" cellspacing="0">
 		  <% for(int i=1;i<=pageSize;i++){ %>
 		  <% if(num<1)break; %>
-		  <%  News news = list.get(curPos++);%>
+		  <% News news = list.get(curPos++);%>
+		  <% List<Comments> lists = news.getList(); %>
 		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
 			  <td width="50"><%=num-- %></td>
-			  <td width="303"><a href="detail.jsp?news_id=<%=news.getNews_id()%>"><%=news.getTitle()%>[5]</a></td>
+			  <td width="303"><a href="detail.jsp?news_id=<%=news.getNews_id()%>"><%=news.getTitle()%>[<%=lists.size() %>]</a></td>
 			  <td width="100"><%=news.getWriter()%></td>
 			  <td width="100"><%=news.getRegdate().substring(0,10)%></td>
 			  <td width="50"><%=news.getHit()%></td>

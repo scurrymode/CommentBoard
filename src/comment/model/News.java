@@ -1,5 +1,7 @@
 package comment.model;
 
+import java.util.List;
+
 public class News {
 	private int news_id;
 	private String writer;
@@ -7,6 +9,7 @@ public class News {
 	private String content;
 	private String regdate;
 	private int hit;
+	private List<Comments> list;
 	
 	public int getNews_id() {
 		return news_id;
@@ -44,8 +47,10 @@ public class News {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	
-	
-	
-
+	public List<Comments> getList() {
+		return list;
+	}
+	public void setList(List<Comments> list) {
+		this.list = list;
+	}
 }

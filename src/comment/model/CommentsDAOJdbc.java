@@ -9,7 +9,7 @@ import java.util.List;
 
 import pool.PoolManager;
 
-public class CommentsDAO {
+public class CommentsDAOJdbc {
 	PoolManager pool = PoolManager.getInstance();
 	
 	//´ñ±Û µî·Ï
